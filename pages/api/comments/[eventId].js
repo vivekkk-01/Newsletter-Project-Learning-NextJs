@@ -11,6 +11,10 @@ const handler = (req, res) => {
 
     return res.status(201).json("Added the Comment.");
   }
+
+  if (req.method === "GET") {
+    return res.json("Comments!");
+  }
 };
 
 export default handler;
