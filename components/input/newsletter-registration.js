@@ -4,7 +4,8 @@ import classes from "./newsletter-registration.module.css";
 function NewsletterRegistration() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  function registrationHandler(event) {
+
+  async function registrationHandler(event) {
     event.preventDefault();
     const isEmailValid =
       /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email) &&
@@ -13,7 +14,13 @@ function NewsletterRegistration() {
       setEmailError("Enter a valid Email Address.");
       return;
     }
-    // send valid data to API
+    fetch("/api/registration", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   return (
@@ -40,8 +47,8 @@ function NewsletterRegistration() {
             aria-label="Your email"
             value={email}
             onChange={({ target }) => {
-              setEmailError("")
-              setEmail(target.value)
+              setEmailError("");
+              setEmail(target.value);
             }}
           />
           <button>Register</button>
